@@ -10,3 +10,6 @@
 [submodule "Tubulin"]
 	path = Tubulin
 	url = https://github.com/jlettvin/Tubulin
+[submodule "rod"]
+	path = rod
+	url = https://github.com/jdl-mit-alum/rod
