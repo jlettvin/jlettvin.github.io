@@ -1,3 +1,6 @@
 [submodule "gaze"]
 	path = gaze
 	url = https://github.com/jlettvin/gaze
+[submodule "JYL"]
+	path = JYL
+	url = https://github.com/jlettvin/JYL
