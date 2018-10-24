@@ -7,3 +7,6 @@
 [submodule "EmerGenTium"]
 	path = EmerGenTium
 	url = https://github.com/jlettvin/EmerGenTium
+[submodule "Tubulin"]
+	path = Tubulin
+	url = https://github.com/jlettvin/Tubulin
