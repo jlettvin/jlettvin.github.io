@@ -4,3 +4,6 @@
 [submodule "JYL"]
 	path = JYL
 	url = https://github.com/jlettvin/JYL
+[submodule "EmerGenTium"]
+	path = EmerGenTium
+	url = https://github.com/jlettvin/EmerGenTium
