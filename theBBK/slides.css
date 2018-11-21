@@ -33,10 +33,12 @@ footer {
 li {
 	font-size: 30px;
 	text-align: left;
+	color: black;
 	background-color: white;
 }
 li.hi {
 	color: red;
+	background-color: white;
 	text-decoration: underline;
 }
 li:hover {
