@@ -5,7 +5,7 @@
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
-		display: document.getElementsByTagName("article")[0],
+		article: document.getElementsByTagName("article")[0],
 		buttons: document.getElementsByTagName("nav")[0],
 		section: document.getElementsByTagName("section"),
 		showing: 0,
@@ -24,7 +24,7 @@
 				if (0 <= change && change < this.counted) {
 					this.showing = change;
 					var slide = change + 1;
-					var target = this.display;
+					var target = this.article;
 					var source = this.section[this.showing];
 					target.innerHTML = '<summary>Slide' + slide + '</summary>' +
 						source.innerHTML;
@@ -35,6 +35,14 @@
 		main: function() {
 			// Count the sections
 			this.counted = this.section.length;
+
+			// Make sure the article tag exists
+			if (this.article === undefined) {
+				this.article = document.createElement("article");
+				document.getElementsByTagName("body")[0].appendChild(
+					this.article
+				);
+			}
 
 			// Accumulate the slides for display
 			for (var N = this.counted, n = 0; n < N; ++n) {
