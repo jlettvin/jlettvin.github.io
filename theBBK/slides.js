@@ -39,9 +39,9 @@
 	document.addEventListener('keyup', function(event) {
 		var key = event.code;
 		switch(key) {
-			case 'PageUp': case 'ArrowLeft': case 'ArrowUp':
+			case 'PageUp': case 'ArrowLeft': // case 'ArrowUp':
 				document.go(-1); break;
-			case 'PageDown': case 'ArrowRight': case 'ArrowDown':
+			case 'PageDown': case 'ArrowRight': // case 'ArrowDown':
 				document.go(+1); break;
 		}
 	});
