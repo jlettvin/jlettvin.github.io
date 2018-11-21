@@ -61,9 +61,11 @@ article {
 }
 section {
 	visibility: hidden;
+	display: none;
 }
 aside {
 	visibility: hidden;
+	display: none;
 }
 summary {
 	font-weight: bold;
