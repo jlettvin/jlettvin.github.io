@@ -1,11 +1,12 @@
 "use strict";
 
 (function() {
+	var version = [0, 0, 9];
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
-		version: [0, 0, 8],
+		version: version,
 		article: document.getElementsByTagName("article")[0],
 		buttons: document.getElementsByTagName("nav")[0],
 		section: document.getElementsByTagName("section"),
@@ -21,6 +22,44 @@
 			],
 		},
 		show: 0,
+
+		xDown: null,
+		yDown: null,
+
+		handleTouchStart: function(evt) {
+			document.jlettvin.slides.xDown = evt.touches[0].clientX;
+			document.jlettvin.slides.yDown = evt.touches[0].clientY;
+		},
+
+		handleTouchMove: function(evt) {
+			var slides = document.jlettvin.slides;  // Needed for context
+			if ( ! xDown || ! yDown ) {
+				return;
+			}
+
+			var xUp = evt.touches[0].clientX;
+			var yUp = evt.touches[0].clientY;
+
+			var xDiff = xDown - xUp;
+			var yDiff = yDown - yUp;
+
+			if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+				if ( xDiff > 0 ) { /* left swipe */ 
+					slides.step(-1);
+				} else { /* right swipe */
+					slides.step(+1);
+				}
+			} else {
+				if ( yDiff > 0 ) { /* up swipe */ 
+					slides.step(+1);
+				} else { /* down swipe */
+					slides.step(-1);
+				}
+			}
+			/* reset values */
+			xDown = null;
+			yDown = null;
+		},
 
 		// Function to hide/show previous/next slide
 		exchange: function() {
@@ -97,6 +136,12 @@
 					case 'PageDown': case 'ArrowRight': slides.step(+1); break;
 				}
 			});
+
+			// Attach functions to slide input
+			document.addEventListener('touchstart',
+				document.jlettvin.slides.handleTouchStart, false);
+			document.addEventListener('touchmove',
+				document.jlettvin.slides.handleTouchMove, false);
 
 			this.step(0);
 		},
