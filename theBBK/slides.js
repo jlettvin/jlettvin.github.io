@@ -1,12 +1,13 @@
 "use strict";
 
 (function() {
-	var version = [0, 0, 9];
+	var version = {major: 0, minor: 0, build: 11,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
 		version: version,
+		body:    document.getElementsByTagName("body")[0],
 		article: document.getElementsByTagName("article")[0],
 		buttons: document.getElementsByTagName("nav")[0],
 		section: document.getElementsByTagName("section"),
@@ -26,39 +27,53 @@
 		xDown: null,
 		yDown: null,
 
-		handleTouchStart: function(evt) {
-			document.jlettvin.slides.xDown = evt.touches[0].clientX;
-			document.jlettvin.slides.yDown = evt.touches[0].clientY;
-		},
 
-		handleTouchMove: function(evt) {
-			var slides = document.jlettvin.slides;  // Needed for context
-			if ( ! xDown || ! yDown ) {
-				return;
-			}
 
-			var xUp = evt.touches[0].clientX;
-			var yUp = evt.touches[0].clientY;
+		swipedetect: function(el, callback) {
 
-			var xDiff = xDown - xUp;
-			var yDiff = yDown - yUp;
+			var touchsurface = el,
+				swipedir,
+				startX,
+				startY,
+				distX,
+				distY,
+				threshold = 150, //required min distance traveled to be considered swipe
+				restraint = 100, // maximum distance allowed at the same time in perpendicular direction
+				allowedTime = 300, // maximum time allowed to travel that distance
+				elapsedTime,
+				startTime,
+				handleswipe = callback || function(swipedir){}
 
-			if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-				if ( xDiff > 0 ) { /* left swipe */ 
-					slides.step(-1);
-				} else { /* right swipe */
-					slides.step(+1);
+			touchsurface.addEventListener('touchstart', function(e){
+				var touchobj = e.changedTouches[0]
+				swipedir = 'none'
+				dist = 0
+				startX = touchobj.pageX
+				startY = touchobj.pageY
+				startTime = new Date().getTime() // record time when finger first makes contact with surface
+				e.preventDefault()
+			}, false)
+
+			touchsurface.addEventListener('touchmove', function(e){
+				e.preventDefault() // prevent scrolling when inside DIV
+			}, false)
+
+			touchsurface.addEventListener('touchend', function(e){
+				var touchobj = e.changedTouches[0]
+				distX = touchobj.pageX - startX // get horizontal dist traveled by finger while in contact with surface
+				distY = touchobj.pageY - startY // get vertical dist traveled by finger while in contact with surface
+				elapsedTime = new Date().getTime() - startTime // get time elapsed
+				if (elapsedTime <= allowedTime){ // first condition for awipe met
+					if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint){ // 2nd condition for horizontal swipe met
+						swipedir = (distX < 0)? 'left' : 'right' // if dist traveled is negative, it indicates left swipe
+					}
+					else if (Math.abs(distY) >= threshold && Math.abs(distX) <= restraint){ // 2nd condition for vertical swipe met
+						swipedir = (distY < 0)? 'up' : 'down' // if dist traveled is negative, it indicates up swipe
+					}
 				}
-			} else {
-				if ( yDiff > 0 ) { /* up swipe */ 
-					slides.step(+1);
-				} else { /* down swipe */
-					slides.step(-1);
-				}
-			}
-			/* reset values */
-			xDown = null;
-			yDown = null;
+				handleswipe(swipedir)
+				e.preventDefault()
+			}, false)
 		},
 
 		// Function to hide/show previous/next slide
@@ -101,9 +116,9 @@
 			this.counted = this.section.length;
 			var version = document.createElement("span");
 			version.innerHTML = "Slides Version: " +
-				this.version[0] + '.' +
-				this.version[1] + '.' +
-				this.version[2] + '<br />';
+				this.version.major + '.' +
+				this.version.minor + '.' +
+				this.version.build + '<br />';
 			version.setAttribute("style", "font-size: 10px; padding: 0px 20px 0px 0px");
 			this.buttons.appendChild(version);
 
@@ -128,6 +143,9 @@
 				this.button.push(button);
 			}
 
+			// Do initial choice and exchange
+			this.step(0);
+
 			// Attach functions to keyboard input
 			var slides  = this;  // Needed for context
 			document.addEventListener('keyup', function(event) {
@@ -137,13 +155,12 @@
 				}
 			});
 
-			// Attach functions to slide input
-			document.addEventListener('touchstart',
-				document.jlettvin.slides.handleTouchStart, false);
-			document.addEventListener('touchmove',
-				document.jlettvin.slides.handleTouchMove, false);
+			// Attach functions to swipe actions
+			this.swipedetect(slides.body,function() { slides.step(-1); });
+			this.swipedetect(slides.body,function() { slides.step(+1); });
+			this.swipedetect(slides.body,function() { slides.step(+1); });
+			this.swipedetect(slides.body,function() { slides.step(-1); });
 
-			this.step(0);
 		},
 	};
 
