@@ -8,41 +8,57 @@
 		article: document.getElementsByTagName("article")[0],
 		buttons: document.getElementsByTagName("nav")[0],
 		section: document.getElementsByTagName("section"),
-		showing: 0,
+		button: [],
+		style: {
+			section: [
+				"display:  none; visibility: hidden;",
+				"display: grid; visibility: visible;",
+			],
+			button: [
+				"background-color: white; color: black;",
+				"background-color: black; color: white;",
+			],
+		},
+		show: 0,
+
+		// Function to hide/show previous/next slide
+		exchange: function() {
+			var slides = document.jlettvin.slides;  // Needed for context
+			var hide   = slides.hide;
+			var show   = slides.show;
+			var style  = slides.style;
+
+			slides. button[hide].setAttribute("style", style.button[0]);
+			slides. button[show].setAttribute("style", style.button[1]);
+			slides.section[hide].setAttribute("style", style.section[0]);
+			slides.section[show].setAttribute("style", style.section[1]);
+		},
 
 		// Function to show current slide
-		redisplay: function (event) {
+		jump: function (event) {
 			var slides = document.jlettvin.slides;  // Needed for context
-			slides.showing = parseInt(this.innerHTML.substr(5)) - 1;
-			slides.go(0);
+			slides.hide = slides.show;
+			slides.show = parseInt(this.innerHTML.substr(5)) - 1;
+			slides.exchange();
 		},
 
 		// Function to fill the article with the currently chosen section
-		go: function(dir) {
+		step: function(dir) {
+			var slides = document.jlettvin.slides;  // Needed for context
 			if (-1 <= dir && dir <= 1) {
-				var change = this.showing + dir;
-				if (0 <= change && change < this.counted) {
-					this.showing = change;
-					var slide = change + 1;
-					var target = this.article;
-					var source = this.section[this.showing];
-					target.innerHTML = '<summary>Slide' + slide + '</summary>' +
-						source.innerHTML;
+				var change = slides.show + dir;
+				if (0 <= change && change < slides.counted) {
+					slides.hide = slides.show;
+					slides.show = change;
+					slides.exchange();
 				}
 			}
 		},
 
+		// Entrypoint function
 		main: function() {
 			// Count the sections
 			this.counted = this.section.length;
-
-			// Make sure the article tag exists
-			if (this.article === undefined) {
-				this.article = document.createElement("article");
-				document.getElementsByTagName("body")[0].appendChild(
-					this.article
-				);
-			}
 
 			// Accumulate the slides for display
 			for (var N = this.counted, n = 0; n < N; ++n) {
@@ -51,23 +67,30 @@
 				var button  = document.createElement("button");
 				var abbr    = document.createElement("abbr");
 
+				// Hide all sections by default
+				section.setAttribute("style", this.style.section[0]);
+
 				abbr.setAttribute("title", help.innerHTML);
+				abbr.setAttribute("display", "none");
+				abbr.setAttribute("visibility", "hidden");
 				button.innerHTML = 'Slide' + (n + 1);
-				button.onclick = this.redisplay;
+				button.onclick = this.jump;
+				buttons.setAttribute("style", this.style.button[0]);
 				abbr.appendChild(button);
 				this.buttons.appendChild(abbr);
+				this.button.push(button);
 			}
 
 			// Attach functions to keyboard input
 			var slides  = this;  // Needed for context
 			document.addEventListener('keyup', function(event) {
 				switch(event.code) {
-					case 'PageUp'  : case 'ArrowLeft' : slides.go(-1); break;
-					case 'PageDown': case 'ArrowRight': slides.go(+1); break;
+					case 'PageUp'  : case 'ArrowLeft' : slides.step(-1); break;
+					case 'PageDown': case 'ArrowRight': slides.step(+1); break;
 				}
 			});
 
-			this.go(0);
+			this.step(0);
 		},
 	};
 
