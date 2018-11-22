@@ -5,7 +5,7 @@
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
-		version: [0, 0, 3],
+		version: [0, 0, 4],
 		article: document.getElementsByTagName("article")[0],
 		buttons: document.getElementsByTagName("nav")[0],
 		section: document.getElementsByTagName("section"),

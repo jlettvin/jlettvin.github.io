@@ -8,6 +8,7 @@ nav {
 	border: 1px solid black;
 	background-color: red;
 	text-align: center;
+	font-size: 100%;
 }
 header {
 	position: fixed;
@@ -31,7 +32,6 @@ footer {
     text-align: center;
 }
 li {
-	/* font-size: 30px; */
 	text-align: left;
 	color: black;
 	background-color: white;
@@ -51,19 +51,13 @@ li.hi:hover {
 	background-color: black;
 	font-weight: bold;
 }
-section, article {
+section {
 	margin: 10px 10px 10px 10px;
 	padding: 2px;
 	border: 1px solid black;
 	background-color: white;
 	text-align: center;
 	width: 100%;
-}
-section {
-	/*
-	visibility: hidden;
-	display: none;
-	*/
 }
 aside {
 	visibility: hidden;
@@ -78,7 +72,4 @@ summary {
 	text-align: center;
 }
 .title {
-}
-.Heilmeier {
-	visibility: hidden;
 }
