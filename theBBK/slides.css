@@ -32,24 +32,28 @@ footer {
     text-align: center;
 }
 li {
+	font-size: 100%;
 	text-align: left;
 	color: black;
 	background-color: white;
 }
 li.hi {
+	font-size: 100%;
 	color: red;
 	background-color: white;
 	text-decoration: underline;
 }
 li:hover {
+	font-size: 100%;
+	font-weight: bold;
 	color: white;
 	background-color: black;
-	font-weight: bold;
 }
 li.hi:hover {
+	font-size: 100%;
+	font-weight: bold;
 	color: #ffcccc;
 	background-color: black;
-	font-weight: bold;
 }
 section {
 	margin: 10px 10px 10px 10px;
