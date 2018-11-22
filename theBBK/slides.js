@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	var version = {major: 0, minor: 0, build: 11,};
+	var version = {major: 0, minor: 0, build: 12,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
