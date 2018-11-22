@@ -1,17 +1,21 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 16,};
+	const version = {major: 0, minor: 0, build: 17,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
-		version: version,
-		body:    document.getElementsByTagName("body")[0],
-		article: document.getElementsByTagName("article")[0],
-		nav: document.getElementsByTagName("nav")[0],
+		version: version,  // javascript code version
+		show: 0,           // default first page
+
+		body:    document.getElementsByTagName("body")   [0],
+		nav:     document.getElementsByTagName("nav")    [0],
+
 		section: document.getElementsByTagName("section"),
+
 		button: [],
+
 		style: {
 			section: [
 				"display:  none; visibility: hidden;",
@@ -22,9 +26,8 @@
 				"background-color: black; color: white;",
 			],
 		},
-		show: 0,
 
-		swipedetect: function(el, callback) {
+		swipe: function(el, callback) {
 			var handleswipe    = callback || function(swipedir){};
 			var touchsurface   = el;
 
@@ -80,7 +83,7 @@
 		},
 
 		// Function to hide/show previous/next slide
-		exchange: function() {
+		swap: function() {
 			var slides = document.jlettvin.slides;  // Needed for context
 			var hide   = slides.hide;
 			var show   = slides.show;
@@ -97,7 +100,7 @@
 			var slides = document.jlettvin.slides;  // Needed for context
 			slides.hide = slides.show;
 			slides.show = parseInt(this.innerHTML.substr(5)) - 1;
-			slides.exchange();
+			slides.swap();
 		},
 
 		// Function to fill the article with the currently chosen section
@@ -108,7 +111,7 @@
 				if (0 <= change && change < slides.counted) {
 					slides.hide = slides.show;
 					slides.show = change;
-					slides.exchange();
+					slides.swap();
 				}
 			}
 		},
@@ -128,25 +131,27 @@
 			// Accumulate the slides for display
 			for (var N = this.counted, n = 0; n < N; ++n) {
 				var section = this.section[n];
-				var help    = section.getElementsByTagName("summary")[0];
-				var button  = document.createElement("button");
-				var abbr    = document.createElement("abbr");
+				var summary = section.getElementsByTagName("summary")[0];
 
 				// Hide all sections by default
 				section.setAttribute("style", this.style.section[0]);
 
-				abbr.setAttribute("title", help.innerHTML);
+				var button  = document.createElement("button");
+				button.innerHTML = 'Slide' + (n + 1);
+				button.onclick   = this.jump;
+
+				var abbr    = document.createElement("abbr");
+				abbr.setAttribute("title", summary.innerHTML);
 				abbr.setAttribute("display", "none");
 				abbr.setAttribute("visibility", "hidden");
-				button.innerHTML = 'Slide' + (n + 1);
-				button.onclick = this.jump;
-				this.nav.setAttribute("style", this.style.button[0]);
 				abbr.appendChild(button);
+
+				this.nav.setAttribute("style", this.style.button[0]);
 				this.nav.appendChild(abbr);
 				this.button.push(button);
 			}
 
-			// Do initial choice and exchange
+			// Do initial choice and swap
 			this.step(0);
 
 			// Attach function to keyboard input
@@ -162,7 +167,7 @@
 			}, false);
 
 			// Attach function to swipe actions
-			this.swipedetect(slides.body,function(swipedir) {
+			this.swipe(slides.body,function(swipedir) {
 				switch(swipedir) {
 					case  'SwipeLeft': case   'SwipeUp': slides.step(+1); break;
 					case 'SwipeRight': case 'SwipeDown': slides.step(-1); break;
