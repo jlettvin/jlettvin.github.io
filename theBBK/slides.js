@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 17,};
+	const version = {major: 0, minor: 0, build: 18,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -132,6 +132,7 @@
 			for (var N = this.counted, n = 0; n < N; ++n) {
 				var section = this.section[n];
 				var summary = section.getElementsByTagName("summary")[0];
+				var aside   = section.getElementsByTagName("aside"  )[0];
 
 				// Hide all sections by default
 				section.setAttribute("style", this.style.section[0]);
@@ -141,7 +142,7 @@
 				button.onclick   = this.jump;
 
 				var abbr    = document.createElement("abbr");
-				abbr.setAttribute("title", summary.innerHTML);
+				abbr.setAttribute("title", summary.innerHTML + '\n' + aside.innerHTML);
 				abbr.setAttribute("display", "none");
 				abbr.setAttribute("visibility", "hidden");
 				abbr.appendChild(button);
