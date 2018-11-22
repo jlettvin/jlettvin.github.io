@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	var version = {major: 0, minor: 0, build: 12,};
+	var version = {major: 0, minor: 0, build: 13,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -156,10 +156,12 @@
 			});
 
 			// Attach functions to swipe actions
-			this.swipedetect(slides.body,function() { slides.step(-1); });
-			this.swipedetect(slides.body,function() { slides.step(+1); });
-			this.swipedetect(slides.body,function() { slides.step(+1); });
-			this.swipedetect(slides.body,function() { slides.step(-1); });
+			this.swipedetect(slides.body,function(swipedir) {
+				switch(swipedir) {
+					case  'left': case   'up': slides.step(+1); break;
+					case 'right': case 'down': slides.step(-1); break;
+				};
+			});
 
 		},
 	};
