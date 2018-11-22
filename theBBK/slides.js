@@ -5,7 +5,7 @@
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
-		version: [0, 0, 5],
+		version: [0, 0, 6],
 		article: document.getElementsByTagName("article")[0],
 		buttons: document.getElementsByTagName("nav")[0],
 		section: document.getElementsByTagName("section"),
@@ -65,7 +65,7 @@
 				this.version[0] + '.' +
 				this.version[1] + '.' +
 				this.version[2];
-			version.setAttribute("style", "padding: 0px 20px 0px 0px");
+			version.setAttribute("style", "font-size: 10px; padding: 0px 20px 0px 0px");
 			this.buttons.appendChild(version);
 
 			// Accumulate the slides for display
