@@ -22,7 +22,7 @@
 				"display: grid; visibility: visible;",
 			],
 			button: [
-				"background-color: white; color: black;",
+				"background-color: #aaaaaa; color: black;",
 				"background-color: black; color: white;",
 			],
 		},
