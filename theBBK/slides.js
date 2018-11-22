@@ -6,7 +6,7 @@
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.slides = document.jlettvin.slides || {
-		version: version,  // javascript code version
+		version: version,  // this javascript code version
 		show: 0,           // default first page
 
 		body:    document.getElementsByTagName("body")   [0],
