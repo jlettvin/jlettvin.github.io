@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 18,};
+	const version = {major: 0, minor: 0, build: 13,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -116,6 +116,7 @@
 					}
 				}
 				document.getElementById('swipe').innerHTML += '<br />fini: ' +
+					document.jlettvin.swipe.version + ' ' +
 					why + '...' +
 					document.jlettvin.swipe.swipedir;
 				if(document.jlettvin.swipe.swipedir != null) handleswipe(document.jlettvin.swipe.swipedir)
