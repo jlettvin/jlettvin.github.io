@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 30,};
+	const version = {major: 0, minor: 0, build: 31,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -34,7 +34,7 @@
 				my.x0 = touched.screenX;
 				my.y0 = touched.screenY;
 				my.t0 = new Date().getTime(); // time of first contact
-				my.show('init', ' xy0(' + my.x0 + ',' + my.y0 + ')');
+				//my.show('init', ' xy0(' + my.x0 + ',' + my.y0 + ')');
 				event.preventDefault()
 			}, false);
 
