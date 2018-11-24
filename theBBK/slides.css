@@ -45,16 +45,26 @@ li.hi {
 }
 li:hover {
 	font-size: 100%;
-	font-weight: bold;
+	/* font-weight: bold; */
 	color: white;
 	background-color: black;
 }
+/*
+li:hover details .tooltip {
+	display: block;
+}
+*/
 li.hi:hover {
 	font-size: 100%;
-	font-weight: bold;
+	/* font-weight: bold; */
 	color: #ffcccc;
 	background-color: black;
 }
+/*
+li.hi:hover details {
+	display: block;
+}
+*/
 section {
 	margin: 10px 10px 10px 10px;
 	padding: 2px;
@@ -74,6 +84,11 @@ summary {
 	background-color: black;
 	color: white;
 	text-align: center;
+}
+details {
+	display: inline;
+	visibility: hidden;
+	display: none;
 }
 .title {
 }
