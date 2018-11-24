@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 34,};
+	const version = {major: 0, minor: 0, build: 35,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -43,21 +43,21 @@
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
 				var my = document.jlettvin.swipe;
-				fillxyt('init', 'xyt0', my.xyt0);
+				my.fillxyt('init', 'xyt0', my.xyt0);
 				event.preventDefault()
 			}, false);
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
 				var xyt;
-				fillxyt('move', 'xyt', my.xyt0);
+				my.fillxyt('move', 'xyt', my.xyt0);
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
 				xyt1;
-				fillxyt('calc', 'xyt1', xyt1);
+				my.fillxyt('calc', 'xyt1', xyt1);
 
 				var dx = xyt1[0] - my.xyt0[0]; // horizontal swipe displacement
 				var dy = xyt1[1] - my.xyt0[1]; // vertical   swipe displacement
@@ -85,9 +85,9 @@
 					}
 					else {
 						my.show('fini', 'inadequate' +
-							strxyt('xyt0', my.xyt0),
-							strxyt('xyt1', xyt1),
-							strxyt('dxyt', dxyt),
+							my.strxyt('xyt0', my.xyt0),
+							my.strxyt('xyt1', xyt1),
+							my.strxyt('dxyt', dxyt),
 							' axy(' + ax + ',' + ay + ')' +
 							' T:' + my.threshold +
 							' R:' + my.restraint);
