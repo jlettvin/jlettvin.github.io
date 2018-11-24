@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 40,};
+	const version = {major: 0, minor: 0, build: 41,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -53,7 +53,7 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
-				var xyt;
+				var xyt = [0,0,0];
 				my.show('move', 'begins');
 				my.fillxyt('move', 'xyt', xyt);
 				my.show('move', 'returns');
@@ -75,6 +75,8 @@
 
 				var ax = Math.abs(dx);
 				var ay = Math.abs(dy);
+
+				my.show('fini', my.strxyt('diff', dxyt));
 
 				// meet first condition for swipe
 				if (dt > my.at) {
