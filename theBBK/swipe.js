@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 31,};
+	const version = {major: 0, minor: 0, build: 32,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -28,19 +28,19 @@
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
 				var my = document.jlettvin.swipe;
-
 				var touched = event.touches[0];
 				my.swipedir = null;
 				my.x0 = touched.screenX;
 				my.y0 = touched.screenY;
 				my.t0 = new Date().getTime(); // time of first contact
-				//my.show('init', ' xy0(' + my.x0 + ',' + my.y0 + ')');
+				my.show('init', ' xy0(' + my.x0 + ',' + my.y0 + ')');
 				event.preventDefault()
 			}, false);
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
 				var my = document.jlettvin.swipe;
+				var touched = event.touches[0];
 				var x = touched.screenX;
 				var y = touched.screenY;
 				my.show('move', ' xy(' + x + ',' + y + ')');
