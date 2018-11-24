@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 50,};
+	const version = {major: 0, minor: 0, build: 51,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -58,11 +58,12 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
-				var my = document.jlettvin.swipe;
 				var finger = event.touches[0];
-				my.show('init', 'begins');
-				my.fillxyt(finger, 'xyt0', my.xyt0);
-				my.show('init', 'returns');
+				var my = document.jlettvin.swipe;
+				my.
+					show('init', 'begins').
+					fillxyt(finger, 'xyt0', my.xyt0).
+					show('init', 'returns');
 				event.preventDefault()
 			}, false);
 
@@ -73,24 +74,25 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
-				var my = document.jlettvin.swipe;
 				var finger = event.touches[0];
-				my.show('fini', 'begins');
-				my.fillxyt(finger, 'xyt1', my.xyt1);
-				my.show('fini', 'diffs');
+				var my = document.jlettvin.swipe;
+				my.
+					show('fini', 'begins').
+					fillxyt(finger, 'xyt1', my.xyt1).
+					show('fini', 'diffs');
 
 				my.xytd[0] = my.xyt1[0] - my.xyt0[0];  // horizontal swipe
 				my.xytd[1] = my.xyt1[1] - my.xyt0[1];  //   vertical swipe
 				my.xytd[2] = my.xyt1[2] - my.xyt0[2];  //       time difference
 
-				my.catxyt('diff', my.xytd);
-				my.show('fini', 'B');
+				my.
+					catxyt('diff', my.xytd).
+					show('fini', 'B');
 
-				my.show('fini', 'C');
 				var ax = Math.abs(dx);
 				var ay = Math.abs(dy);
 
-				my.show('fini', 'D');
+				my.show('fini', 'C');
 
 				// meet first condition for swipe
 				if (my.xytd[2] > my.at) {
