@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 28,};
+	const version = {major: 0, minor: 0, build: 29,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -14,8 +14,8 @@
 		dt: null,
 		t0: null,
 		at: 1000, // maximum time for swipe
-		threshold: 150, // required min distance considered swipe
-		restraint: 100, // maximum perpendicular distance
+		threshold: 50, // required min distance considered swipe
+		restraint: 40, // maximum perpendicular distance
 		show: function(title, msg) {
 			document.getElementById('swipe').innerHTML += '<br />' +
 				document.jlettvin.swipe.version + ' [' + title + ']: ' + msg;
