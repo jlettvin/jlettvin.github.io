@@ -81,7 +81,7 @@
 				document.jlettvin.swipe.startTime = new Date().getTime(); // time of first contact
 				document.getElementById('swipe').innerHTML += '<br />init: ' +
 					' xy0(' + document.jlettvin.swipe.x0 +
-					','     + document.jlettvin.swipe.y0 + ')' +
+					','     + document.jlettvin.swipe.y0 + ')'
 					;
 				event.preventDefault()
 			}, false);
