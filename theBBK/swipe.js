@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 48,};
+	const version = {major: 0, minor: 0, build: 49,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -17,32 +17,40 @@
 		threshold: 100 * scale, // required min distance considered swipe
 		restraint:  80 * scale, // maximum perpendicular distance
 
-		print: function(str) {
-			document.getElementById('swipe').innerHTML += '' + str.toString();
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		cat: function(val) {
+			document.getElementById('swipe').innerHTML += val.toString();
+			return document.jlettvin.swipe;
+		},
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		catxyt: function(xyt) {
+			return document.jlettvin.swipe.
+				cat('(').
+				cat(xyt[0]).
+				cat(',').
+				cat(xyt[1]).
+				cat(',').
+				cat(xyt[2]).
+				cat(')');
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		show: function(title, msg) {
-			var my = document.jlettvin.swipe;
-			my.print('<br />swipe v');
-			my.print(document.jlettvin.swipe.version + ' [' + title + ']: ');
-			my.print(msg);
-		},
-
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		printxyt: function(name, xyt) {
-			var my = document.jlettvin.swipe;
-			my.show(name, ': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')');
+			return document.jlettvin.swipe.
+				cat('<br />swipe v').
+				cat(document.jlettvin.swipe.version + ' [' + title + ']: ').
+				cat(msg);
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		fillxyt: function(name, xyt) {
-			var my = document.jlettvin.swipe;
 			var finger = event.touches[0];
 			xyt[0] = finger.screenX;
 			xyt[1] = finger.screenY;
 			xyt[2] = new Date().getTime();
-			my.printxyt(name, xyt);
+			return document.jlettvin.swipe.
+				cat(name + ':').catxyt(xyt);
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -74,7 +82,8 @@
 				my.xytd[0] = my.xyt1[0] - my.xyt0[0];  // horizontal swipe
 				my.xytd[1] = my.xyt1[1] - my.xyt0[1];  //   vertical swipe
 				my.xytd[2] = my.xyt1[2] - my.xyt0[2];  //       time difference
-				my.printxyt('diff', my.xytd);
+
+				my.catxyt('diff', my.xytd);
 				my.show('fini', 'B');
 
 				my.show('fini', 'C');
