@@ -12,6 +12,9 @@
 		y0: null,
 		elapsedTime: null,
 		startTime: null,
+		threshold: 150; // required min distance considered swipe
+		restraint: 100; // maximum perpendicular distance
+		allowedTime: 1000; // maximum time for swipe
 
 		newswipe: function(el,func) {
 			var swipe_det = new Object();
@@ -63,9 +66,6 @@
 			var handleswipe    = callback || function(swipedir){};
 			var touchsurface   = el;
 
-			const threshold    = 150; // required min distance considered swipe
-			const restraint    = 100; // maximum perpendicular distance
-			const allowedTime  = 1000; // maximum time for swipe
 
 			var x;
 			var y;
@@ -80,8 +80,9 @@
 				document.jlettvin.swipe.y0 = touchobj.screenY;
 				document.jlettvin.swipe.startTime = new Date().getTime(); // time of first contact
 				document.getElementById('swipe').innerHTML += '<br />init: ' +
-					' xy0(' + document.jlettvin.swipe.x0 +
-					','     + document.jlettvin.swipe.y0 + ')'
+					//' xy0(' + document.jlettvin.swipe.x0 +
+					//','     + document.jlettvin.swipe.y0 + ')'
+					''
 					;
 				event.preventDefault()
 			}, false);
@@ -110,13 +111,13 @@
 					var adx = Math.abs(dx);
 					var ady = Math.abs(dy);
 					// meet 2nd condition for horizontal swipe
-					if (adx >= threshold && ady <= restraint) {
+					if (adx >= document.jlettvin.swipe.threshold && ady <= document.jlettvin.swipe.restraint) {
 						why = 'X';
 						// if dist traveled is negative, it indicates left swipe
 						document.jlettvin.swipe.swipedir = (dx < 0)? 'SwipeLeft' : 'SwipeRight'
 					}
 					// meet 2nd condition for vertical swipe
-					else if (ady >= threshold && adx <= restraint) {
+					else if (ady >= document.jlettvin.swipe.threshold && adx <= document.jlettvin.swipe.restraint) {
 						why = 'Y';
 						// if dist traveled is negative, it indicates up swipe
 						document.jlettvin.swipe.swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
@@ -128,8 +129,8 @@
 							','     + document.jlettvin.swipe.y0 + ')' +
 							' dxy(' + dx + ',' + dy + ')' +
 							' abs(' + adx + ',' + ady + ')' +
-							' T:' + threshold +
-							' R:' + restraint
+							' T:' + document.jlettvin.swipe.threshold +
+							' R:' + document.jlettvin.swipe.restraint
 							;
 						document.jlettvin.swipe.swipedir = null;
 					}
