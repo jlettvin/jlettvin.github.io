@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 44,};
+	const version = {major: 0, minor: 0, build: 45,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -24,8 +24,13 @@
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		strxyt: function(title, xyt) {
-			return title + ': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')';
+		strxyt: function(name, xyt) {
+			return name + ': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')';
+		},
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		showxyt: function(name, xyt) {
+			my.show('show', my.strxyt(name, xyt));
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -35,7 +40,7 @@
 			xyt[0] = finger.screenX;
 			xyt[1] = finger.screenY;
 			xyt[2] = new Date().getTime();
-			my.show('fill', my.strxyt(name, xyt));
+			my.showxyt(name, xyt);
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -61,15 +66,13 @@
 			touchsurface.addEventListener('touchend', function(event) {
 				var my = document.jlettvin.swipe;
 				my.show('fini', 'begins');
-
-				my.show('fini', '@');
 				my.fillxyt('xyt1', my.xyt1);
-
-				my.show('fini', 'A');
+				my.show('fini', 'diffs');
 
 				my.xytd[0] = my.xyt1[0] - my.xyt0[0];  // horizontal swipe
 				my.xytd[1] = my.xyt1[1] - my.xyt0[1];  //   vertical swipe
 				my.xytd[2] = my.xyt1[2] - my.xyt0[2];  //       time difference
+				my.showxyt('diff', my.xytd);
 				my.show('fini', 'B');
 
 				my.show('fini', 'C');
@@ -77,7 +80,6 @@
 				var ay = Math.abs(dy);
 
 				my.show('fini', 'D');
-				my.show('fini', my.strxyt('diff', my.xytd));
 
 				// meet first condition for swipe
 				if (my.xytd[2] > my.at) {
