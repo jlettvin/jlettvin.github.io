@@ -5,14 +5,14 @@
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	</head>
 	<body>
-
 		<div id="swipe"></div>
 	</body>
 
 	<script type="text/javascript" src="swipe.js"></script>
 	<script type="text/javascript">
-
-		document.jlettvin.swipe.swipe(
+(function() {
+		var handler = document.getElementById('swipe');
+		handler.innerHTML += document.jlettvin.swipe.swipe(
 			document.getElementsByTagName('body')[0],
 			function(swipedir) {
 				switch(swipedir) {
@@ -28,7 +28,8 @@
 						break;
 				};
 			});
-			document.getElementById('swipe').innerHTML += 'Added swipe handler';
+		swipe.innerHTML += '<br />Added swipe handler';
+})();
 	</script>
 
 </html>
