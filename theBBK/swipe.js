@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 38,};
+	const version = {major: 0, minor: 0, build: 39,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -44,21 +44,26 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
+				my.show('init', 'begins');
 				var my = document.jlettvin.swipe;
 				my.fillxyt('init', 'xyt0', my.xyt0);
+				my.show('init', 'returns');
 				event.preventDefault()
 			}, false);
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
+				my.show('move', 'begins');
 				var xyt;
 				my.fillxyt('move', 'xyt', xyt);
+				my.show('move', 'returns');
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
-				xyt1 = [0,0,0];
+				my.show('fini', 'begins');
+				var xyt1 = [0,0,0];
 				my.fillxyt('calc', 'xyt1', xyt1);
 
 				var dx = xyt1[0] - my.xyt0[0]; // horizontal swipe displacement
@@ -95,6 +100,7 @@
 							' R:' + my.restraint);
 					}
 				}
+				my.show('fini', 'returns');
 				event.preventDefault();
 			}, false);
 			//-------------------------------------------------------------------
