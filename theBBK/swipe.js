@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 39,};
+	const version = {major: 0, minor: 0, build: 40,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -44,8 +44,8 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
-				my.show('init', 'begins');
 				var my = document.jlettvin.swipe;
+				my.show('init', 'begins');
 				my.fillxyt('init', 'xyt0', my.xyt0);
 				my.show('init', 'returns');
 				event.preventDefault()
@@ -53,8 +53,8 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
-				my.show('move', 'begins');
 				var xyt;
+				my.show('move', 'begins');
 				my.fillxyt('move', 'xyt', xyt);
 				my.show('move', 'returns');
 				event.preventDefault(); // prevent scrolling while swiping
@@ -62,7 +62,9 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
+				var my = document.jlettvin.swipe;
 				my.show('fini', 'begins');
+
 				var xyt1 = [0,0,0];
 				my.fillxyt('calc', 'xyt1', xyt1);
 
@@ -73,8 +75,6 @@
 
 				var ax = Math.abs(dx);
 				var ay = Math.abs(dy);
-
-				var my = document.jlettvin.swipe;
 
 				// meet first condition for swipe
 				if (dt > my.at) {
