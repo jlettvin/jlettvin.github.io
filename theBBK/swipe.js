@@ -58,11 +58,10 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
-				var finger = event.touches[0];
 				var my = document.jlettvin.swipe;
 				my.
 					show('init', 'begins').
-					fillxyt(finger, 'xyt0', my.xyt0).
+					fillxyt(event.touches[0], 'xyt0', my.xyt0).
 					show('init', 'returns');
 				event.preventDefault()
 			}, false);
@@ -74,11 +73,10 @@
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
-				var finger = event.touches[0];
 				var my = document.jlettvin.swipe;
 				my.
 					show('fini', 'begins').
-					fillxyt(finger, 'xyt1', my.xyt1).
+					fillxyt(event.touches[0], 'xyt1', my.xyt1).
 					show('fini', 'diffs');
 
 				my.xytd[0] = my.xyt1[0] - my.xyt0[0];  // horizontal swipe
