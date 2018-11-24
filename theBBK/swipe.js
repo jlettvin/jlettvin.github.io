@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 26,};
+	const version = {major: 0, minor: 0, build: 27,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -29,9 +29,7 @@
 			touchsurface.addEventListener('touchstart', function(event) {
 				var my = document.jlettvin.swipe;
 
-				my.show('event', event);
-
-				var touched = e.touches[0];
+				var touched = event.touches[0];
 				my.swipedir = null;
 				my.x0 = touched.screenX;
 				my.y0 = touched.screenY;
