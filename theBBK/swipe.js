@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 37,};
+	const version = {major: 0, minor: 0, build: 38,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -31,7 +31,9 @@
 		fillxyt: function(title, name, xyt) {
 			var my = document.jlettvin.swipe;
 			var finger = event.touches[0];
-			xyt = [finger.screenX, finger.screenY, new Date().getTime()];
+			xyt[0] = finger.screenX;
+			xyt[1] = finger.screenY;
+			xyt[2] = new Date().getTime();
 			my.show(title, my.strxyt(name, xyt));
 		},
 
