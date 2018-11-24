@@ -13,8 +13,9 @@
 	<script type="text/javascript">
 
 		document.addEventListener('keyup', function(event) {
-		var target = document.getItemById('swipe');
-		target.innerHTML += '<br />' + event;
+			var target = document.getItemById('swipe');
+			target.innerHTML += '<br />' + event;
+			console.log("I got swiped");
 		});
 	</script>
 
