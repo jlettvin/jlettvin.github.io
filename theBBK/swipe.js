@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 42,};
+	const version = {major: 0, minor: 0, build: 43,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -28,13 +28,13 @@
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		fillxyt: function(title, name, xyt) {
+		fillxyt: function(name, xyt) {
 			var my = document.jlettvin.swipe;
 			var finger = event.touches[0];
 			xyt[0] = finger.screenX;
 			xyt[1] = finger.screenY;
 			xyt[2] = new Date().getTime();
-			my.show(title, my.strxyt(name, xyt));
+			my.show('fill', my.strxyt(name, xyt));
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,21 +46,15 @@
 			touchsurface.addEventListener('touchstart', function(event) {
 				var my = document.jlettvin.swipe;
 				my.show('init', 'begins');
-				my.fillxyt('init', 'xyt0', my.xyt0);
+				my.fillxyt('xyt0', my.xyt0);
 				my.show('init', 'returns');
 				event.preventDefault()
 			}, false);
 
 			//-------------------------------------------------------------------
-			/*
 			touchsurface.addEventListener('touchmove', function(event) {
-				var xyt = [0,0,0];
-				my.show('move', 'begins');
-				my.fillxyt('move', 'xyt', xyt);
-				my.show('move', 'returns');
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
-			*/
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
@@ -68,7 +62,8 @@
 				my.show('fini', 'begins');
 
 				var xyt1 = [0,0,0];
-				my.fillxyt('calc', 'xyt1', xyt1);
+				my.show('fini', '@');
+				my.fillxyt('xyt1', xyt1);
 
 				my.show('fini', 'A');
 
