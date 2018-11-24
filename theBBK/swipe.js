@@ -1,20 +1,22 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 21,};
+	const version = {major: 0, minor: 0, build: 22,};
+	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
 	document.jlettvin.swipe = document.jlettvin.swipe || {
-		version: version,  // this javascript code version
+		version: verstr,  // this javascript code version
 		direction: null,
 		x0: null,
 		y0: null,
-		elapsedTime: null,
-		startTime: null,
+		dt: null,
+		t0: null,
+		at: 1000, // maximum time for swipe
 		threshold: 150, // required min distance considered swipe
 		restraint: 100, // maximum perpendicular distance
-		allowedTime: 1000, // maximum time for swipe
+		show: document.getElementById('swipe'),
 
 		newswipe: function(el,func) {
 			var swipe_det = new Object();
@@ -66,80 +68,69 @@
 			var handleswipe    = callback || function(swipedir){};
 			var touchsurface   = el;
 
-
-			var x;
-			var y;
-			var dx;
-			var dy;
-
 			touchsurface.addEventListener('touchstart', function(event) {
-				var touchobj = e.touches[0];
-				document.jlettvin.swipe.swipedir = null;
-				dist = 0;
-				document.jlettvin.swipe.x0 = touchobj.screenX;
-				document.jlettvin.swipe.y0 = touchobj.screenY;
-				document.jlettvin.swipe.startTime = new Date().getTime(); // time of first contact
-				document.getElementById('swipe').innerHTML += '<br />init: ' +
-					//' xy0(' + document.jlettvin.swipe.x0 +
-					//','     + document.jlettvin.swipe.y0 + ')'
-					''
-					;
+				var my = document.jlettvin.swipe;
+				var touched = e.touches[0];
+				my.swipedir = null;
+				my.x0 = touched.screenX;
+				my.y0 = touched.screenY;
+				my.t0 = new Date().getTime(); // time of first contact
+				my.show.innerHTML += '<br />init: ' +
+					' xy0(' + my.x0 + ',' + my.y0 + ')';
 				event.preventDefault()
 			}, false);
 
 			touchsurface.addEventListener('touchmove', function(event) {
-				document.getElementById('swipe').innerHTML += '<br />move';
+				var my = document.jlettvin.swipe;
+				my.show.innerHTML += '<br />move';
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
 			touchsurface.addEventListener('touchend', function(event) {
-				var touchobj = event.touches[0];
+				var my = document.jlettvin.swipe;
+				var touched = event.touches[0];
 				var why = 'unknown';
-				x = touchobj.screenX;
-				y = touchobj.screenY;
-				dx = touchobj.screenX - document.jlettvin.swipe.x0; // horizontal swipe displacement
-				dy = touchobj.screenY - document.jlettvin.swipe.y0; // vertical   swipe displacement
-				document.jlettvin.swipe.elapsedTime = new Date().getTime() -
-					document.jlettvin.swipe.startTime // elapsed time
-				// meet first condition for awipe
-				if (document.jlettvin.swipe.elapsedTime >
-					document.jlettvin.swipe.allowedTime) {
-					why = '' +
-						'dt ' + document.jlettvin.swipe.elapsedTime +
-						' > ' + document.jlettvin.swipe.allowedTime;
+				var x = touched.screenX;
+				var y = touched.screenY;
+				var dx = x - my.x0; // horizontal swipe displacement
+				var dy = y - my.y0; // vertical   swipe displacement
+				var adx = Math.abs(dx);
+				var ady = Math.abs(dy);
+
+				my.dt = new Date().getTime() - my.t0 // elapsed time
+				// meet first condition for swipe
+				if (my.dt > my.at) {
+					why = '' + 'dt ' + my.dt + ' > ' + my.at;
 				} else {
-					var adx = Math.abs(dx);
-					var ady = Math.abs(dy);
 					// meet 2nd condition for horizontal swipe
-					if (adx >= document.jlettvin.swipe.threshold && ady <= document.jlettvin.swipe.restraint) {
+					if (adx >= my.threshold && ady <= my.restraint) {
 						why = 'X';
 						// if dist traveled is negative, it indicates left swipe
-						document.jlettvin.swipe.swipedir = (dx < 0)? 'SwipeLeft' : 'SwipeRight'
+						my.swipedir = (dx < 0)? 'SwipeLeft' : 'SwipeRight'
 					}
 					// meet 2nd condition for vertical swipe
-					else if (ady >= document.jlettvin.swipe.threshold && adx <= document.jlettvin.swipe.restraint) {
+					else if (ady >= my.threshold && adx <= my.restraint) {
 						why = 'Y';
 						// if dist traveled is negative, it indicates up swipe
-						document.jlettvin.swipe.swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
+						my.swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
 					}
 					else {
 						why = 'neither' +
 							' xy(' + x + ',' + y + ')' +
-							' xy0(' + document.jlettvin.swipe.x0 +
-							','     + document.jlettvin.swipe.y0 + ')' +
+							' xy0(' + my.x0 + ','     + my.y0 + ')' +
 							' dxy(' + dx + ',' + dy + ')' +
 							' abs(' + adx + ',' + ady + ')' +
-							' T:' + document.jlettvin.swipe.threshold +
-							' R:' + document.jlettvin.swipe.restraint
-							;
-						document.jlettvin.swipe.swipedir = null;
+							' T:' + my.threshold +
+							' R:' + my.restraint;
+						my.swipedir = null;
 					}
 				}
-				document.getElementById('swipe').innerHTML += '<br />fini: ' +
-					document.jlettvin.swipe.version.toString() + ' ' +
+				my.show.innerHTML += '' +
+					'<br />fini: ' +
+					my.version.toString() + ' ' +
 					why + '...' +
-					document.jlettvin.swipe.swipedir;
-				if(document.jlettvin.swipe.swipedir != null) handleswipe(document.jlettvin.swipe.swipedir)
+					my.swipedir;
+				if(my.swipedir != null) handleswipe(my.swipedir)
 				event.preventDefault()
 			}, false);
 
