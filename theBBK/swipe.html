@@ -24,13 +24,11 @@
 			document.getElementById('swipe').innerHTML += '<br />call' +
 				'('+swipedir+')';
 			switch(swipedir) {
-				case 'l': case 'u':
 				case  'SwipeLeft': case   'SwipeUp':
 					document.getElementById('swipe').innerHTML += '<br />' +
 						swipedir;
 					console.log("I got swiped", swipedir);
 					break;
-				case 'r': case 'd':
 				case 'SwipeRight': case 'SwipeDown':
 					document.getElementById('swipe').innerHTML += '<br />' +
 						swipedir;
