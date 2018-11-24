@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 36,};
+	const version = {major: 0, minor: 0, build: 37,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -32,7 +32,7 @@
 			var my = document.jlettvin.swipe;
 			var finger = event.touches[0];
 			xyt = [finger.screenX, finger.screenY, new Date().getTime()];
-			my.show(title, my.strxyt(name, my.xyt0));
+			my.show(title, my.strxyt(name, xyt));
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -50,13 +50,13 @@
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
 				var xyt;
-				my.fillxyt('move', 'xyt', my.xyt0);
+				my.fillxyt('move', 'xyt', xyt);
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
-				xyt1;
+				xyt1 = [0,0,0];
 				my.fillxyt('calc', 'xyt1', xyt1);
 
 				var dx = xyt1[0] - my.xyt0[0]; // horizontal swipe displacement
