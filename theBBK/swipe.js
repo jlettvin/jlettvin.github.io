@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 35,};
+	const version = {major: 0, minor: 0, build: 36,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -18,7 +18,7 @@
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		show: function(title, msg) {
-			document.getElementById('swipe').innerHTML += '<br />' +
+			document.getElementById('swipe').innerHTML += '<br />swipe v' +
 				document.jlettvin.swipe.version + ' [' + title + ']: ' + msg;
 		},
 
