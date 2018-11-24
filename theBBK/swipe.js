@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 27,};
+	const version = {major: 0, minor: 0, build: 28,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -41,7 +41,9 @@
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchmove', function(event) {
 				var my = document.jlettvin.swipe;
-				my.show('move', '');
+				var x = touched.screenX;
+				var y = touched.screenY;
+				my.show('move', ' xy(' + x + ',' + y + ')');
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
@@ -52,6 +54,7 @@
 				var why = 'unknown';
 				var x = touched.screenX;
 				var y = touched.screenY;
+				my.show('fini', ' xy(' + x + ',' + y + ')');
 				var dx = x - my.x0; // horizontal swipe displacement
 				var dy = y - my.y0; // vertical   swipe displacement
 				var adx = Math.abs(dx);
