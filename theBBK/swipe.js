@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 43,};
+	const version = {major: 0, minor: 0, build: 44,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -11,7 +11,8 @@
 		version: verstr,  // this javascript code version
 		direction: null,
 		xyt0 : [0,0,0],
-		dt: null,
+		xyt1 : [0,0,0],
+		xytd : [0,0,0],
 		at: 1000, // maximum time for swipe
 		threshold: 100 * scale, // required min distance considered swipe
 		restraint:  80 * scale, // maximum perpendicular distance
@@ -61,44 +62,42 @@
 				var my = document.jlettvin.swipe;
 				my.show('fini', 'begins');
 
-				var xyt1 = [0,0,0];
 				my.show('fini', '@');
-				my.fillxyt('xyt1', xyt1);
+				my.fillxyt('xyt1', my.xyt1);
 
 				my.show('fini', 'A');
 
-				var dx = xyt1[0] - my.xyt0[0]; // horizontal swipe displacement
-				var dy = xyt1[1] - my.xyt0[1]; // vertical   swipe displacement
-				var dt = xyt1[2] - my.xyt0[2]; // elapsed    time
+				my.xytd[0] = my.xyt1[0] - my.xyt0[0];  // horizontal swipe
+				my.xytd[1] = my.xyt1[1] - my.xyt0[1];  //   vertical swipe
+				my.xytd[2] = my.xyt1[2] - my.xyt0[2];  //       time difference
 				my.show('fini', 'B');
-				var dxyt = [dx, dy, dt];
 
 				my.show('fini', 'C');
 				var ax = Math.abs(dx);
 				var ay = Math.abs(dy);
 
 				my.show('fini', 'D');
-				my.show('fini', my.strxyt('diff', dxyt));
+				my.show('fini', my.strxyt('diff', my.xytd));
 
 				// meet first condition for swipe
-				if (dt > my.at) {
-					my.show('fini', 'dt excess: ', '' + dt + ' > ' + my.at);
+				if (my.xytd.[2] > my.at) {
+					my.show('fini', 'dt excess: ', '' + my.xytd.[2] + ' > ' + my.at);
 				} else {
 					// meet 2nd condition for horizontal swipe
 					if (ax >= my.threshold && ay <= my.restraint) {
 						my.show('fini', 'x satisfied');
-						handleswipe((dx < 0)? 'SwipeLeft' : 'SwipeRight');
+						handleswipe((my.xytd[0] < 0)? 'SwipeLeft' : 'SwipeRight');
 					}
 					// meet 2nd condition for vertical swipe
-					else if (ay >= my.threshold && ax <= my.restraint) {
+					else if (my.xytd[1] >= my.threshold && ax <= my.restraint) {
 						my.show('fini', 'y satisfied');
-						handleswipe((dy < 0)? 'SwipeUp' : 'SwipeDown');
+						handleswipe((my.xytd[1] < 0)? 'SwipeUp' : 'SwipeDown');
 					}
 					else {
 						my.show('fini', 'inadequate' +
 							my.strxyt('xyt0', my.xyt0),
-							my.strxyt('xyt1', xyt1),
-							my.strxyt('dxyt', dxyt),
+							my.strxyt('xyt1', my.xyt1),
+							my.strxyt('dxyt', my.xytd),
 							' axy(' + ax + ',' + ay + ')' +
 							' T:' + my.threshold +
 							' R:' + my.restraint);
