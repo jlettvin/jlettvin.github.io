@@ -25,6 +25,7 @@
 			var startTime;
 
 			touchsurface.addEventListener('touchstart', function(event) {
+				document.getElementById('swipe').innerHTML += '<br />init';
 				var touchobj = e.changedTouches[0]
 				swipedir = 'none'
 				dist = 0
@@ -35,10 +36,12 @@
 			}, false);
 
 			touchsurface.addEventListener('touchmove', function(event) {
+				document.getElementById('swipe').innerHTML += '<br />move';
 				event.preventDefault() // prevent scrolling while swiping
 			}, false);
 
 			touchsurface.addEventListener('touchend', function(event) {
+				document.getElementById('swipe').innerHTML += '<br />fini';
 				var touchobj = event.changedTouches[0]
 				dx = touchobj.pageX - x0 // horizontal swipe displacement
 				dy = touchobj.pageY - y0 // vertical   swipe displacement
