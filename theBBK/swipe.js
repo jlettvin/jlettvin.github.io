@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 24,};
+	const version = {major: 0, minor: 0, build: 25,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -18,7 +18,7 @@
 		restraint: 100, // maximum perpendicular distance
 		show: function(title, msg) {
 			document.getElementById('swipe').innerHTML += '<br />' +
-				document.jlettvin.swipe.version + '[' + title + ']: ' + msg;
+				document.jlettvin.swipe.version + ' [' + title + ']: ' + msg;
 		},
 
 		newswipe: function(el,func) {
