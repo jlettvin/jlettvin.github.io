@@ -88,6 +88,7 @@
 
 			touchsurface.addEventListener('touchend', function(event) {
 				var touchobj = event.changedTouches[0]
+				var why = 'overtime';
 				dx = touchobj.pageX - x0 // horizontal swipe displacement
 				dy = touchobj.pageY - y0 // vertical   swipe displacement
 				elapsedTime = new Date().getTime() - startTime // elapsed time
@@ -97,19 +98,23 @@
 					var ady = Math.abs(dy);
 					// meet 2nd condition for horizontal swipe
 					if (adx >= threshold && ady <= restraint) {
+						why = 'X';
 						// if dist traveled is negative, it indicates left swipe
 						document.jlettvin.swipe.swipedir = (dx < 0)? 'SwipeLeft' : 'SwipeRight'
 					}
 					// meet 2nd condition for vertical swipe
 					else if (ady >= threshold && adx <= restraint) {
+						why = 'Y';
 						// if dist traveled is negative, it indicates up swipe
 						document.jlettvin.swipe.swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
 					}
 					else {
+						why = 'neither';
 						document.jlettvin.swipe.swipedir = null;
 					}
 				}
 				document.getElementById('swipe').innerHTML += '<br />fini: ' +
+					why + '...' +
 					document.jlettvin.swipe.swipedir;
 				if(document.jlettvin.swipe.swipedir != null) handleswipe(document.jlettvin.swipe.swipedir)
 				event.preventDefault()
