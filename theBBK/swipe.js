@@ -8,7 +8,7 @@
 	document.jlettvin.swipe = document.jlettvin.swipe || {
 		version: version,  // this javascript code version
 
-		swipe: function(el,func) {
+		newswipe: function(el,func) {
 			var swipe_det = new Object();
 			swipe_det.sX = 0; swipe_det.sY = 0; swipe_det.eX = 0; swipe_det.eY = 0;
 			var min_x = 30;  //min x swipe for horizontal swipe
@@ -54,7 +54,7 @@
 			//alert("you swiped on element with id '"+el+"' to "+d+" direction");
 		//}
 
-		oldswipe: function(el, callback) {
+		swipe: function(el, callback) {
 			var handleswipe    = callback || function(swipedir){};
 			var touchsurface   = el;
 
