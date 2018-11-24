@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 18,};
+	const version = {major: 0, minor: 0, build: 19,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -73,13 +73,16 @@
 			var dy;
 
 			touchsurface.addEventListener('touchstart', function(event) {
-				document.getElementById('swipe').innerHTML += '<br />init';
-				var touchobj = e.changedTouches[0];
+				var touchobj = e.touches[0];
 				document.jlettvin.swipe.swipedir = null;
 				dist = 0;
 				document.jlettvin.swipe.x0 = touchobj.pageX;
 				document.jlettvin.swipe.y0 = touchobj.pageY;
 				document.jlettvin.swipe.startTime = new Date().getTime(); // time of first contact
+				document.getElementById('swipe').innerHTML += '<br />init: ' +
+					' xy0(' + document.jlettvin.swipe.x0 +
+					','     + document.jlettvin.swipe.y0 + ')' +
+					;
 				event.preventDefault()
 			}, false);
 
@@ -89,7 +92,7 @@
 			}, false);
 
 			touchsurface.addEventListener('touchend', function(event) {
-				var touchobj = event.changedTouches[0];
+				var touchobj = event.touches[0];
 				var why = 'unknown';
 				x = touchobj.pageX;
 				y = touchobj.pageY;
