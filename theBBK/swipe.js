@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 13,};
+	const version = {major: 0, minor: 0, build: 14,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -111,7 +111,12 @@
 						document.jlettvin.swipe.swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
 					}
 					else {
-						why = 'neither';
+						why = 'neither' +
+							' xy(' + dx + ',' + dy + ')' +
+							' abs(' + adx + ',' + ady + ')' +
+							'T:' + threshold +
+							'R:' + restraint
+							;
 						document.jlettvin.swipe.swipedir = null;
 					}
 				}
