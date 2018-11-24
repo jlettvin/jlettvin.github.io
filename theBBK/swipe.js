@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 19,};
+	const version = {major: 0, minor: 0, build: 20,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -76,8 +76,8 @@
 				var touchobj = e.touches[0];
 				document.jlettvin.swipe.swipedir = null;
 				dist = 0;
-				document.jlettvin.swipe.x0 = touchobj.pageX;
-				document.jlettvin.swipe.y0 = touchobj.pageY;
+				document.jlettvin.swipe.x0 = touchobj.screenX;
+				document.jlettvin.swipe.y0 = touchobj.screenY;
 				document.jlettvin.swipe.startTime = new Date().getTime(); // time of first contact
 				document.getElementById('swipe').innerHTML += '<br />init: ' +
 					' xy0(' + document.jlettvin.swipe.x0 +
@@ -94,10 +94,10 @@
 			touchsurface.addEventListener('touchend', function(event) {
 				var touchobj = event.touches[0];
 				var why = 'unknown';
-				x = touchobj.pageX;
-				y = touchobj.pageY;
-				dx = touchobj.pageX - document.jlettvin.swipe.x0; // horizontal swipe displacement
-				dy = touchobj.pageY - document.jlettvin.swipe.y0; // vertical   swipe displacement
+				x = touchobj.screenX;
+				y = touchobj.screenY;
+				dx = touchobj.screenX - document.jlettvin.swipe.x0; // horizontal swipe displacement
+				dy = touchobj.screenY - document.jlettvin.swipe.y0; // vertical   swipe displacement
 				document.jlettvin.swipe.elapsedTime = new Date().getTime() -
 					document.jlettvin.swipe.startTime // elapsed time
 				// meet first condition for awipe
