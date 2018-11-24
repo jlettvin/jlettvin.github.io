@@ -11,17 +11,20 @@
 	<script type="text/javascript" src="swipe.js"></script>
 	<script type="text/javascript">
 (function() {
-		var handler = document.getElementById('swipe');
-		handler.innerHTML += document.jlettvin.swipe.swipe(
+		var version = [0, 0, 4];
+		var report = document.getElementById('swipe');
+		report.innerHTML += document.jlettvin.swipe.swipe(
 			document.getElementsByTagName('body')[0],
 			function(swipedir) {
 				document.getElementById('swipe').innerHTML += '<br />call';
 				switch(swipedir) {
+					case 'l': case 'u':
 					case  'SwipeLeft': case   'SwipeUp':
 						document.getElementById('swipe').innerHTML += '<br />' +
 							swipedir;
 						console.log("I got swiped", swipedir);
 						break;
+					case 'r': case 'd':
 					case 'SwipeRight': case 'SwipeDown':
 						document.getElementById('swipe').innerHTML += '<br />' +
 							swipedir;
@@ -29,7 +32,7 @@
 						break;
 				};
 			});
-		swipe.innerHTML += '<br />Added swipe handler (0.0.2)';
+		swipe.innerHTML += '<br />Added swipe handler: ' + version;
 })();
 	</script>
 
