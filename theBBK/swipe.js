@@ -80,8 +80,8 @@
 				my.show('fini', my.strxyt('diff', my.xytd));
 
 				// meet first condition for swipe
-				if (my.xytd.[2] > my.at) {
-					my.show('fini', 'dt excess: ', '' + my.xytd.[2] + ' > ' + my.at);
+				if (my.xytd[2] > my.at) {
+					my.show('fini', 'dt excess: ', '' + my.xytd[2] + ' > ' + my.at);
 				} else {
 					// meet 2nd condition for horizontal swipe
 					if (ax >= my.threshold && ay <= my.restraint) {
