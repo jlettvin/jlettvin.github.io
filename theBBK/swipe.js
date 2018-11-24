@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 46,};
+	const version = {major: 0, minor: 0, build: 47,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -17,22 +17,23 @@
 		threshold: 100 * scale, // required min distance considered swipe
 		restraint:  80 * scale, // maximum perpendicular distance
 
+		print: function(str) {
+			document.getElementById('swipe').innerHTML += '' + str.toString();
+		}
+
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		show: function(title, msg) {
-			document.getElementById('swipe').innerHTML += '<br />swipe v' +
-				document.jlettvin.swipe.version + ' [' + title + ']: ' + msg;
+			var my = document.jlettvin.swipe;
+			my.print('<br />swipe v');
+			my.print(document.jlettvin.swipe.version + ' [' + title + ']: ');
+			my.print(msg);
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		strxyt: function(name, xyt) {
-			return string.concat(
-				name , ': (' , xyt[0] , ',' , xyt[1] , ',' , xyt[2] , ')'
-			);
-		},
-
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		showxyt: function(name, xyt) {
-			my.show('show', my.strxyt(name, xyt));
+		printxyt: function(name, xyt) {
+			var my = document.jlettvin.swipe;
+			my.print(name);
+			my.print(': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')');
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -42,15 +43,13 @@
 			xyt[0] = finger.screenX;
 			xyt[1] = finger.screenY;
 			xyt[2] = new Date().getTime();
-			my.show('fillxyt', 'A');
-			my.showxyt(name, xyt);
-			my.show('fillxyt', 'B');
+			my.printxyt(name, xyt);
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		swipe: function(el, callback) {
+		swipe: function(element, callback) {
 			var handleswipe    = callback || function(swipedir){};
-			var touchsurface   = el;
+			var touchsurface   = element;
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchstart', function(event) {
@@ -76,7 +75,7 @@
 				my.xytd[0] = my.xyt1[0] - my.xyt0[0];  // horizontal swipe
 				my.xytd[1] = my.xyt1[1] - my.xyt0[1];  //   vertical swipe
 				my.xytd[2] = my.xyt1[2] - my.xyt0[2];  //       time difference
-				my.showxyt('diff', my.xytd);
+				my.printxyt('diff', my.xytd);
 				my.show('fini', 'B');
 
 				my.show('fini', 'C');
