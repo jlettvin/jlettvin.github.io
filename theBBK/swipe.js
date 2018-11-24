@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 47,};
+	const version = {major: 0, minor: 0, build: 48,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -19,7 +19,7 @@
 
 		print: function(str) {
 			document.getElementById('swipe').innerHTML += '' + str.toString();
-		}
+		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		show: function(title, msg) {
@@ -32,8 +32,7 @@
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		printxyt: function(name, xyt) {
 			var my = document.jlettvin.swipe;
-			my.print(name);
-			my.print(': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')');
+			my.show(name, ': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')');
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
