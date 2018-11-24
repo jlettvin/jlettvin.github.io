@@ -87,7 +87,6 @@
 			}, false);
 
 			touchsurface.addEventListener('touchend', function(event) {
-				document.getElementById('swipe').innerHTML += '<br />fini';
 				var touchobj = event.changedTouches[0]
 				dx = touchobj.pageX - x0 // horizontal swipe displacement
 				dy = touchobj.pageY - y0 // vertical   swipe displacement
@@ -110,7 +109,9 @@
 						swipedir = null;
 					}
 				}
-				if(swipedir) handleswipe(swipedir)
+				document.getElementById('swipe').innerHTML += '<br />fini: ' +
+					swipedir;
+				if(swipedir != null) handleswipe(swipedir)
 				event.preventDefault()
 			}, false);
 
