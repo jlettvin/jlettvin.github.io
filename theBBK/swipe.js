@@ -62,7 +62,7 @@
 			const restraint    = 100; // maximum perpendicular distance
 			const allowedTime  = 300; // maximum time for swipe
 
-			var swipedir;
+			var swipedir = null;
 			var x0;
 			var y0;
 			var dx;
@@ -73,7 +73,7 @@
 			touchsurface.addEventListener('touchstart', function(event) {
 				document.getElementById('swipe').innerHTML += '<br />init';
 				var touchobj = e.changedTouches[0]
-				swipedir = 'none'
+				swipedir = null;
 				dist = 0
 				x0 = touchobj.pageX
 				y0 = touchobj.pageY
@@ -106,8 +106,11 @@
 						// if dist traveled is negative, it indicates up swipe
 						swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
 					}
+					else {
+						swipedir = null;
+					}
 				}
-				handleswipe(swipedir)
+				if(swipedir) handleswipe(swipedir)
 				event.preventDefault()
 			}, false);
 
