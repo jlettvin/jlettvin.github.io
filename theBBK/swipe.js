@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 22,};
+	const version = {major: 0, minor: 0, build: 24,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 
 	// Re-use or build namespace
@@ -16,7 +16,10 @@
 		at: 1000, // maximum time for swipe
 		threshold: 150, // required min distance considered swipe
 		restraint: 100, // maximum perpendicular distance
-		show: document.getElementById('swipe'),
+		show: function(title, msg) {
+			document.getElementById('swipe').innerHTML += '<br />' +
+				document.jlettvin.swipe.version + '[' + title + ']: ' + msg;
+		},
 
 		newswipe: function(el,func) {
 			var swipe_det = new Object();
@@ -75,14 +78,13 @@
 				my.x0 = touched.screenX;
 				my.y0 = touched.screenY;
 				my.t0 = new Date().getTime(); // time of first contact
-				my.show.innerHTML += '<br />init: ' +
-					' xy0(' + my.x0 + ',' + my.y0 + ')';
+				my.show('init', ' xy0(' + my.x0 + ',' + my.y0 + ')');
 				event.preventDefault()
 			}, false);
 
 			touchsurface.addEventListener('touchmove', function(event) {
 				var my = document.jlettvin.swipe;
-				my.show.innerHTML += '<br />move';
+				my.show('move', '');
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
@@ -97,44 +99,39 @@
 				var adx = Math.abs(dx);
 				var ady = Math.abs(dy);
 
-				my.dt = new Date().getTime() - my.t0 // elapsed time
+				var dt = new Date().getTime() - my.t0 // elapsed time
 				// meet first condition for swipe
-				if (my.dt > my.at) {
-					why = '' + 'dt ' + my.dt + ' > ' + my.at;
+				if (dt > my.at) {
+					my.show('fini', 'dt too large: ', '' + dt + ' > ' + my.at);
 				} else {
 					// meet 2nd condition for horizontal swipe
 					if (adx >= my.threshold && ady <= my.restraint) {
-						why = 'X';
+						my.show('fini', 'adequate x');
 						// if dist traveled is negative, it indicates left swipe
 						my.swipedir = (dx < 0)? 'SwipeLeft' : 'SwipeRight'
 					}
 					// meet 2nd condition for vertical swipe
 					else if (ady >= my.threshold && adx <= my.restraint) {
-						why = 'Y';
+						my.show('fini', 'adequate y');
 						// if dist traveled is negative, it indicates up swipe
 						my.swipedir = (dy < 0)? 'SwipeUp' : 'SwipeDown';
 					}
 					else {
-						why = 'neither' +
+						my.show('fini', 'inadequate' +
 							' xy(' + x + ',' + y + ')' +
 							' xy0(' + my.x0 + ','     + my.y0 + ')' +
 							' dxy(' + dx + ',' + dy + ')' +
 							' abs(' + adx + ',' + ady + ')' +
 							' T:' + my.threshold +
-							' R:' + my.restraint;
+							' R:' + my.restraint);
 						my.swipedir = null;
 					}
 				}
-				my.show.innerHTML += '' +
-					'<br />fini: ' +
-					my.version.toString() + ' ' +
-					why + '...' +
-					my.swipedir;
 				if(my.swipedir != null) handleswipe(my.swipedir)
 				event.preventDefault()
 			}, false);
 
-			return 'returned from call to old swipe handler installer';
+			return this.version;
 		},
 	};
 
