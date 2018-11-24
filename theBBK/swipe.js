@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 20,};
+	const version = {major: 0, minor: 0, build: 21,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -12,9 +12,9 @@
 		y0: null,
 		elapsedTime: null,
 		startTime: null,
-		threshold: 150; // required min distance considered swipe
-		restraint: 100; // maximum perpendicular distance
-		allowedTime: 1000; // maximum time for swipe
+		threshold: 150, // required min distance considered swipe
+		restraint: 100, // maximum perpendicular distance
+		allowedTime: 1000, // maximum time for swipe
 
 		newswipe: function(el,func) {
 			var swipe_det = new Object();
