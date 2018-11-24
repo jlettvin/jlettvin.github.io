@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 45,};
+	const version = {major: 0, minor: 0, build: 46,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -25,7 +25,9 @@
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		strxyt: function(name, xyt) {
-			return name + ': (' + xyt[0] + ',' + xyt[1] + ',' + xyt[2] + ')';
+			return string.concat(
+				name , ': (' , xyt[0] , ',' , xyt[1] , ',' , xyt[2] , ')'
+			);
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -40,7 +42,9 @@
 			xyt[0] = finger.screenX;
 			xyt[1] = finger.screenY;
 			xyt[2] = new Date().getTime();
+			my.show('fillxyt', 'A');
 			my.showxyt(name, xyt);
+			my.show('fillxyt', 'B');
 		},
 
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
