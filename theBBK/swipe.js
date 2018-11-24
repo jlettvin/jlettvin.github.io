@@ -94,7 +94,7 @@
 				elapsedTime = new Date().getTime() - startTime // elapsed time
 				// meet first condition for awipe
 				if (elapsedTime > allowedTime) {
-					why = 'dt ' + elapsedTime ' > ' + allowedTime;
+					why = 'dt ' + elapsedTime + ' > ' + allowedTime;
 				} else {
 					var adx = Math.abs(dx);
 					var ady = Math.abs(dy);
