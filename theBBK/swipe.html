@@ -24,7 +24,8 @@
 			report,
 			//document.getElementsByTagName('body')[0],
 			function(swipedir) {
-				document.getElementById('swipe').innerHTML += '<br />call';
+				document.getElementById('swipe').innerHTML += '<br />call' +
+					'('+swipedir+')';
 				switch(swipedir) {
 					case 'l': case 'u':
 					case  'SwipeLeft': case   'SwipeUp':
