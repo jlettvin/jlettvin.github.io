@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 41,};
+	const version = {major: 0, minor: 0, build: 42,};
 	const verstr  = '' + version.major + '.' + version.minor + '.' + version.build;
 	const scale = 1.5;
 
@@ -52,6 +52,7 @@
 			}, false);
 
 			//-------------------------------------------------------------------
+			/*
 			touchsurface.addEventListener('touchmove', function(event) {
 				var xyt = [0,0,0];
 				my.show('move', 'begins');
@@ -59,6 +60,7 @@
 				my.show('move', 'returns');
 				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
+			*/
 
 			//-------------------------------------------------------------------
 			touchsurface.addEventListener('touchend', function(event) {
@@ -68,14 +70,19 @@
 				var xyt1 = [0,0,0];
 				my.fillxyt('calc', 'xyt1', xyt1);
 
+				my.show('fini', 'A');
+
 				var dx = xyt1[0] - my.xyt0[0]; // horizontal swipe displacement
 				var dy = xyt1[1] - my.xyt0[1]; // vertical   swipe displacement
 				var dt = xyt1[2] - my.xyt0[2]; // elapsed    time
+				my.show('fini', 'B');
 				var dxyt = [dx, dy, dt];
 
+				my.show('fini', 'C');
 				var ax = Math.abs(dx);
 				var ay = Math.abs(dy);
 
+				my.show('fini', 'D');
 				my.show('fini', my.strxyt('diff', dxyt));
 
 				// meet first condition for swipe
