@@ -61,6 +61,8 @@
 				handleswipe(swipedir)
 				event.preventDefault()
 			}, false);
+
+			return 'returned from call to swipe handler installer';
 		},
 	};
 
