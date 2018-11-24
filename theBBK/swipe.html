@@ -11,10 +11,11 @@
 	<script type="text/javascript" src="swipe.js"></script>
 	<script type="text/javascript">
 (function() {
-		var version = [0, 0, 4];
+		var version = [0, 0, 5];
 		var report = document.getElementById('swipe');
 		report.innerHTML += document.jlettvin.swipe.swipe(
-			document.getElementsByTagName('body')[0],
+			report,
+			//document.getElementsByTagName('body')[0],
 			function(swipedir) {
 				document.getElementById('swipe').innerHTML += '<br />call';
 				switch(swipedir) {
