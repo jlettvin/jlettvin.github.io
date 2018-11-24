@@ -61,7 +61,7 @@
 
 			const threshold    = 150; // required min distance considered swipe
 			const restraint    = 100; // maximum perpendicular distance
-			const allowedTime  = 300; // maximum time for swipe
+			const allowedTime  = 1000; // maximum time for swipe
 
 			var x0;
 			var y0;
@@ -88,12 +88,14 @@
 
 			touchsurface.addEventListener('touchend', function(event) {
 				var touchobj = event.changedTouches[0]
-				var why = 'overtime';
+				var why = 'unknown';
 				dx = touchobj.pageX - x0 // horizontal swipe displacement
 				dy = touchobj.pageY - y0 // vertical   swipe displacement
 				elapsedTime = new Date().getTime() - startTime // elapsed time
 				// meet first condition for awipe
-				if (elapsedTime <= allowedTime) {
+				if (elapsedTime > allowedTime) {
+					why = 'dt ' + elapsedTime ' > ' + allowedTime;
+				} else {
 					var adx = Math.abs(dx);
 					var ady = Math.abs(dy);
 					// meet 2nd condition for horizontal swipe
