@@ -1,7 +1,7 @@
 "use strict";
 
 (function() {
-	const version = {major: 0, minor: 0, build: 16,};
+	const version = {major: 0, minor: 0, build: 18,};
 
 	// Re-use or build namespace
 	document.jlettvin = document.jlettvin || {};
@@ -67,34 +67,42 @@
 			const restraint    = 100; // maximum perpendicular distance
 			const allowedTime  = 1000; // maximum time for swipe
 
+			var x;
+			var y;
 			var dx;
 			var dy;
 
 			touchsurface.addEventListener('touchstart', function(event) {
 				document.getElementById('swipe').innerHTML += '<br />init';
-				var touchobj = e.changedTouches[0]
+				var touchobj = e.changedTouches[0];
 				document.jlettvin.swipe.swipedir = null;
-				dist = 0
-				document.jlettvin.swipe.x0 = touchobj.pageX
-				document.jlettvin.swipe.y0 = touchobj.pageY
-				document.jlettvin.swipe.startTime = new Date().getTime() // time of first contact
+				dist = 0;
+				document.jlettvin.swipe.x0 = touchobj.pageX;
+				document.jlettvin.swipe.y0 = touchobj.pageY;
+				document.jlettvin.swipe.startTime = new Date().getTime(); // time of first contact
 				event.preventDefault()
 			}, false);
 
 			touchsurface.addEventListener('touchmove', function(event) {
 				document.getElementById('swipe').innerHTML += '<br />move';
-				event.preventDefault() // prevent scrolling while swiping
+				event.preventDefault(); // prevent scrolling while swiping
 			}, false);
 
 			touchsurface.addEventListener('touchend', function(event) {
-				var touchobj = event.changedTouches[0]
+				var touchobj = event.changedTouches[0];
 				var why = 'unknown';
-				dx = touchobj.pageX - document.jlettvin.swipe.x0 // horizontal swipe displacement
-				dy = touchobj.pageY - document.jlettvin.swipe.y0 // vertical   swipe displacement
-				document.jlettvin.swipe.elapsedTime = new Date().getTime() - document.jlettvin.swipe.startTime // elapsed time
+				x = touchobj.pageX;
+				y = touchobj.pageY;
+				dx = touchobj.pageX - document.jlettvin.swipe.x0; // horizontal swipe displacement
+				dy = touchobj.pageY - document.jlettvin.swipe.y0; // vertical   swipe displacement
+				document.jlettvin.swipe.elapsedTime = new Date().getTime() -
+					document.jlettvin.swipe.startTime // elapsed time
 				// meet first condition for awipe
-				if (document.jlettvin.swipe.elapsedTime > document.jlettvin.swipe.allowedTime) {
-					why = 'dt ' + document.jlettvin.swipe.elapsedTime + ' > ' + document.jlettvin.swipe.allowedTime;
+				if (document.jlettvin.swipe.elapsedTime >
+					document.jlettvin.swipe.allowedTime) {
+					why = '' +
+						'dt ' + document.jlettvin.swipe.elapsedTime +
+						' > ' + document.jlettvin.swipe.allowedTime;
 				} else {
 					var adx = Math.abs(dx);
 					var ady = Math.abs(dy);
@@ -112,16 +120,19 @@
 					}
 					else {
 						why = 'neither' +
-							' xy(' + dx + ',' + dy + ')' +
+							' xy(' + x + ',' + y + ')' +
+							' xy0(' + document.jlettvin.swipe.x0 +
+							','     + document.jlettvin.swipe.y0 + ')' +
+							' dxy(' + dx + ',' + dy + ')' +
 							' abs(' + adx + ',' + ady + ')' +
-							'T:' + threshold +
-							'R:' + restraint
+							' T:' + threshold +
+							' R:' + restraint
 							;
 						document.jlettvin.swipe.swipedir = null;
 					}
 				}
 				document.getElementById('swipe').innerHTML += '<br />fini: ' +
-					document.jlettvin.swipe.version + ' ' +
+					document.jlettvin.swipe.version.toString() + ' ' +
 					why + '...' +
 					document.jlettvin.swipe.swipedir;
 				if(document.jlettvin.swipe.swipedir != null) handleswipe(document.jlettvin.swipe.swipedir)
